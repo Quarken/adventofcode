@@ -5,6 +5,7 @@ import "core:fmt"
 import "core:strconv"
 import "core:sys/windows"
 import "core:strings"
+import "core:time"
 
 Solution :: proc(input: string) -> (p1, p2: int)
 solutions := []Solution{
@@ -52,35 +53,29 @@ main :: proc() {
     }
     input := string(f)
 
-    // @TODO: Linux support
-    performance_frequency: windows.LARGE_INTEGER = 0
-    start_time: windows.LARGE_INTEGER = 0
-    end_time: windows.LARGE_INTEGER = 0
-    windows.QueryPerformanceFrequency(&performance_frequency)
-
     average: f64 = 0
     mintime: f64 = 99999999
     maxtime: f64 = 0
     p1, p2 := 0, 0
     for i in 0..<runs {
-        windows.QueryPerformanceCounter(&start_time)
+        stopwatch: time.Stopwatch
+        time.stopwatch_start(&stopwatch)
         p1, p2 = solutions[day](input)
-        windows.QueryPerformanceCounter(&end_time)
-        elapsed := end_time - start_time
-        elapsed *= 1000000
-        elapsed /= performance_frequency
+        time.stopwatch_stop(&stopwatch)
+        duration := time.stopwatch_duration(stopwatch)
+        ms := time.duration_milliseconds(duration)
 
-        average += f64(elapsed) / f64(runs)
-        maxtime = max(maxtime, f64(elapsed))
-        mintime = min(mintime, f64(elapsed))
+        average += ms / f64(runs)
+        maxtime = max(maxtime, ms)
+        mintime = min(mintime, ms)
     }
 
     fmt.println("Advent of Code 2024 day 5")
     fmt.println("----------------------------------")
     fmt.printfln("Timings for %i runs (ms)", runs)
-    fmt.printfln("  Avg: %3f", average / 1000)
-    fmt.printfln("  Min: %3f", mintime / 1000)
-    fmt.printfln("  Max: %3f", maxtime / 1000)
+    fmt.printfln("  Avg: %3f", average)
+    fmt.printfln("  Min: %3f", mintime)
+    fmt.printfln("  Max: %3f", maxtime)
     fmt.println("----------------------------------")
     fmt.println("Solutions")
     fmt.println("  Part 1:", p1)
