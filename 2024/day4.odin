@@ -70,7 +70,8 @@ search_crosses :: proc(xmas_map: ^Map, x, y: int) -> int {
     return 0
 }
 
-day4 :: proc(input: string) -> (p1, p2: int) {
+day4 :: proc(input: string) -> (Answer, Answer) {
+    p1, p2: int
     data := strings.split_lines(input)
     xmas_map := Map{data, len(data[0]), len(data)}
 

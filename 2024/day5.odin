@@ -3,7 +3,8 @@ package main
 import "core:strings"
 import "core:strconv"
 
-day5 :: proc(input: string) -> (p1, p2: int) {
+day5 :: proc(input: string) -> (Answer, Answer) {
+    p1, p2: int
     rules: [100][100]bool // rule[x][y] == true implies X|Y
     lines := strings.split_lines(input)
 
@@ -12,7 +13,7 @@ day5 :: proc(input: string) -> (p1, p2: int) {
         if line == "" {
             is_rule = false
             continue
-        }
+    }
 
         if is_rule {
             num1, _ := strconv.parse_int(line[0:2])

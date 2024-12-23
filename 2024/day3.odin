@@ -10,7 +10,9 @@ parse_numeric :: proc(s: string) -> (int, int) {
     return res, i
 }
 
-day3 :: proc(input: string) -> (p1, p2: int) {
+day3 :: proc(input: string) -> (Answer, Answer) {
+    p1, p2: int
+
     flag := true
     for index := 0; index < len(input); index += 1 {
         if input[index] == 'd' {
@@ -32,5 +34,6 @@ day3 :: proc(input: string) -> (p1, p2: int) {
             }
         }
     }
+
     return p1, p2
 }

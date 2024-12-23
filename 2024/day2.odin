@@ -19,7 +19,7 @@ is_safe :: proc(levels: [dynamic]int) -> bool {
     return true
 }
 
-day2 :: proc(text: string) -> (int, int) {
+day2 :: proc(text: string) -> (Answer, Answer) {
     p1 := 0
     p2 := 0
 

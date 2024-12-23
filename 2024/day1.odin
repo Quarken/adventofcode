@@ -4,7 +4,7 @@ import "core:strings"
 import "core:strconv"
 import "core:slice"
 
-day1 :: proc(text: string) -> (int, int) {
+day1 :: proc(text: string) -> (Answer, Answer) {
     lines := strings.split_lines(text)
 
     col1: [dynamic]int
@@ -24,8 +24,7 @@ day1 :: proc(text: string) -> (int, int) {
     slice.sort(col1[:])
     slice.sort(col2[:])
 
-    p1 := 0
-    p2 := 0
+    p1, p2: int
     for i in 0..<len(col1) {
         num1 := col1[i]
         p1 += abs(col2[i] - col1[i])
